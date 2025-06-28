@@ -1,3 +1,5 @@
+import Container from './Container'
+
 export interface ProfileCardProps {
   image: string
   name: string
@@ -9,7 +11,7 @@ export interface ProfileCardProps {
 
 export default function ProfileCard({ ...props }: ProfileCardProps) {
   return (
-    <div className="flex w-96 flex-col rounded-2xl border-1 border-stone-300 bg-stone-400 text-center text-xl text-stone-700">
+    <Container>
       <div className="grid grid-cols-4">
         <div className="">
           <img
@@ -20,16 +22,14 @@ export default function ProfileCard({ ...props }: ProfileCardProps) {
         </div>
         <div className="col-span-3 p-2 text-left">
           <div className="text-base font-bold">{props.name}</div>
-          <div className="text-sm">
-            {(props.company && props.company) || '-'}
-          </div>
+          <div className="text-sm">{props.company || '-'}</div>
           <div className="text-sm">{props.jobTitle}</div>
         </div>
       </div>
 
       <div className="border-y-1 border-stone-300 p-3 text-left">
         {props.bio}
-        <div className="py-1 text-base font-bold">Skills:</div>
+        <div className="py-1 text-sm font-bold">Skills:</div>
         <ul className="list-disc pl-4 text-sm">
           {props.skills.map((entry) => (
             <li>{entry}</li>
@@ -40,6 +40,6 @@ export default function ProfileCard({ ...props }: ProfileCardProps) {
         <div className="px-2 py-1 text-left text-sm italic">created:</div>
         <div className="px-2 py-1 text-right text-sm italic">26/06/2025</div>
       </div>
-    </div>
+    </Container>
   )
 }

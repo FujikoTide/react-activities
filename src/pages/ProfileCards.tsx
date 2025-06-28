@@ -8,7 +8,7 @@ const profiles: ProfileCardProps[] = [
     image: person1,
     name: 'Harold Finch',
     company: 'Big Data Inc.',
-    jobTitle: 'President',
+    jobTitle: 'CTO',
     bio: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi voluptas rerum error, unde reiciendis quisquam, porro ex at nihil labore debitis doloribus delectus earum quas.',
     skills: ['Database Management', 'Data Analysis'],
   },
@@ -39,13 +39,11 @@ const profiles: ProfileCardProps[] = [
 
 function ProfileCards() {
   return (
-    <div>
+    <>
       {profiles.map((entry, index) => (
-        <div className="flex flex-col items-center p-8">
-          <ProfileCard key={index} {...entry} />
-        </div>
+        <ProfileCard key={index} {...entry} />
       ))}
-    </div>
+    </>
   )
 }
 
