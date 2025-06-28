@@ -27,11 +27,22 @@ export default function BotListManager() {
     { id: 3, name: 'Data Analyzer', status: 'Stopped', task: 'Analyzing data' },
   ])
 
-  const [filterBy, SetFilterBy] = useState('')
+  const [filterBy, SetFilterBy] = useState('All')
+  const [id, setId] = useState(bots.length + 1)
+  const [formData, setFormData] = useState({
+    name: '',
+    task: '',
+  })
 
-  function displayBot(bot: BotListTypes) {
+  const displayBot = (bot: BotListTypes) => {
     return (
       <div className="m-2 rounded-2xl border-2 border-black bg-stone-600 px-4 py-2 text-stone-300">
+        <div
+          onClick={() => handleDeleteBot(bot.id)}
+          className="text-md my-1 w-8 cursor-pointer rounded-sm border-2 border-black bg-red-500 px-2 text-right text-white text-shadow-md text-shadow-stone-800"
+        >
+          X
+        </div>
         <div className="flex justify-between">
           <div>ID: </div>
           <div>{bot.id}</div>
@@ -75,7 +86,19 @@ export default function BotListManager() {
     )
   }
 
-  function handleTask(botId: BotListTypes['id'], newStatus: BotStatusString) {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }))
+  }
+
+  const handleTask = (
+    botId: BotListTypes['id'],
+    newStatus: BotStatusString,
+  ) => {
     setBots((prevBots) => {
       return prevBots.map((bot) => {
         if (bot.id === botId) {
@@ -84,6 +107,26 @@ export default function BotListManager() {
         return bot
       })
     })
+  }
+
+  const handleAddBot = () => {
+    const newBot: BotListTypes = {
+      id: id,
+      name: formData.name,
+      status: 'Stopped',
+      task: formData.task,
+    }
+    setBots((prevBots) => [...prevBots, newBot])
+    setId((prevId) => prevId + 1)
+    setFormData({
+      name: '',
+      task: '',
+    })
+  }
+
+  const handleDeleteBot = (botId: number) => {
+    const newBots = bots.filter((bot) => bot.id !== botId)
+    setBots(newBots)
   }
 
   return (
@@ -109,28 +152,58 @@ export default function BotListManager() {
           <button
             type="button"
             onClick={() => SetFilterBy('Completed')}
-            className={`m-1 rounded-md border-2 border-black bg-blue-700 px-1 text-xs text-white text-shadow-md text-shadow-stone-800 ${filterBy === 'Complete' ? 'shadow-md shadow-stone-100' : null}`}
+            className={`m-1 rounded-md border-2 border-black bg-blue-700 px-1 text-xs text-white text-shadow-md text-shadow-stone-800 ${filterBy === 'Completed' ? 'shadow-md shadow-stone-100' : null}`}
           >
             Complete
           </button>
           <button
             type="button"
-            onClick={() => SetFilterBy('')}
-            className={`m-1 rounded-md border-2 border-black bg-orange-500 px-1 text-xs text-white text-shadow-md text-shadow-stone-800 ${filterBy === '' ? 'shadow-md shadow-stone-100' : null}`}
+            onClick={() => SetFilterBy('All')}
+            className={`m-1 rounded-md border-2 border-black bg-orange-500 px-1 text-xs text-white text-shadow-md text-shadow-stone-800 ${filterBy === 'All' ? 'shadow-md shadow-stone-100' : null}`}
           >
             All
           </button>
         </div>
         <div>
           <ul>
-            {bots.map((bot) => {
-              {
-                if (bot.status === filterBy || !filterBy) {
-                  return <li key={bot.id}>{displayBot(bot)}</li>
-                }
-              }
-            })}
+            {bots
+              .filter((bot) => bot.status === filterBy || filterBy === 'All')
+              .map((bot) => (
+                <li key={bot.id}>{displayBot(bot)}</li>
+              ))}
           </ul>
+        </div>
+        <div>
+          <div>Add Bot:</div>
+          <div>
+            <input
+              type="text"
+              name="name"
+              onChange={handleChange}
+              value={formData.name}
+              className="m-1 rounded-lg border-2 border-orange-400 bg-stone-300 px-2 text-base outline-0"
+              placeholder="enter name..."
+            />
+          </div>
+          <div>
+            <input
+              type="text"
+              name="task"
+              onChange={handleChange}
+              value={formData.task}
+              className="m-1 rounded-lg border-2 border-orange-400 bg-stone-300 px-2 text-base outline-0"
+              placeholder="enter task..."
+            />
+          </div>
+          <div>
+            <button
+              type="button"
+              onClick={handleAddBot}
+              className="m-2 rounded-xl border-2 border-black bg-blue-700 px-2 py-1 text-base font-bold text-white text-shadow-md text-shadow-stone-800 hover:shadow-sm hover:shadow-stone-800"
+            >
+              Add Bot
+            </button>
+          </div>
         </div>
       </div>
     </Container>
