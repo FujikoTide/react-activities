@@ -27,7 +27,7 @@ export default function BotListManager() {
     { id: 3, name: 'Data Analyzer', status: 'Stopped', task: 'Analyzing data' },
   ])
 
-  const [filterBy, SetFilterBy] = useState('All')
+  const [filterBy, setFilterBy] = useState('All')
   const [id, setId] = useState(bots.length + 1)
   const [formData, setFormData] = useState({
     name: '',
@@ -137,28 +137,28 @@ export default function BotListManager() {
           Filter by:
           <button
             type="button"
-            onClick={() => SetFilterBy('Running')}
+            onClick={() => setFilterBy('Running')}
             className={`m-1 rounded-md border-2 border-black bg-green-600 px-1 text-xs text-white text-shadow-md text-shadow-stone-800 ${filterBy === 'Running' ? 'shadow-md shadow-stone-100' : null}`}
           >
             Running
           </button>
           <button
             type="button"
-            onClick={() => SetFilterBy('Stopped')}
+            onClick={() => setFilterBy('Stopped')}
             className={`m-1 rounded-md border-2 border-black bg-red-500 px-1 text-xs text-white text-shadow-md text-shadow-stone-800 ${filterBy === 'Stopped' ? 'shadow-md shadow-stone-100' : null}`}
           >
             Stopped
           </button>
           <button
             type="button"
-            onClick={() => SetFilterBy('Completed')}
+            onClick={() => setFilterBy('Completed')}
             className={`m-1 rounded-md border-2 border-black bg-blue-700 px-1 text-xs text-white text-shadow-md text-shadow-stone-800 ${filterBy === 'Completed' ? 'shadow-md shadow-stone-100' : null}`}
           >
             Complete
           </button>
           <button
             type="button"
-            onClick={() => SetFilterBy('All')}
+            onClick={() => setFilterBy('All')}
             className={`m-1 rounded-md border-2 border-black bg-orange-500 px-1 text-xs text-white text-shadow-md text-shadow-stone-800 ${filterBy === 'All' ? 'shadow-md shadow-stone-100' : null}`}
           >
             All

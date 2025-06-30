@@ -31,8 +31,8 @@ export default function ProfileCard({ ...props }: ProfileCardProps) {
         {props.bio}
         <div className="py-1 text-sm font-bold">Skills:</div>
         <ul className="list-disc pl-4 text-sm">
-          {props.skills.map((entry) => (
-            <li>{entry}</li>
+          {props.skills.map((entry, index) => (
+            <li key={index}>{entry}</li>
           ))}
         </ul>
       </div>
