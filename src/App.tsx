@@ -4,7 +4,9 @@ import Button from './components/Button'
 import DynamicForm from './components/DynamicForm'
 import JobBoard from './components/JobBoard'
 import JobCounter from './components/JobCounter'
+import JobForm from './components/JobForm'
 import ModularJobBoard from './components/ModularJobBoard'
+import StatusBoard from './components/StatusBoard'
 import VariableDisplay from './components/VariableDisplay'
 import ProfileCards from './pages/ProfileCards'
 
@@ -20,6 +22,8 @@ function App() {
       <DynamicForm />
       <BotListManager />
       <ModularJobBoard />
+      <StatusBoard />
+      <JobForm />
     </div>
   )
 }

@@ -103,7 +103,7 @@ export default function JobList({
         </button>
       </div>
       <div>
-        <div>Add Bot:</div>
+        <div>Add Job:</div>
         <div>
           <input
             type="text"
@@ -127,7 +127,6 @@ export default function JobList({
                 {status}
               </option>
             ))}
-            <option value=""></option>
           </select>
         </div>
         <div>
@@ -136,7 +135,7 @@ export default function JobList({
             onClick={onAddJob}
             className="m-2 rounded-xl border-2 border-black bg-blue-700 px-2 py-1 text-base font-bold text-white text-shadow-md text-shadow-stone-800 hover:shadow-sm hover:shadow-stone-800"
           >
-            Add Bot
+            Add Job
           </button>
         </div>
       </div>
