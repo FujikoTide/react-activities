@@ -1,12 +1,7 @@
-import { useState } from 'react'
-import type { JobCategories, JobStatus } from '../types/jobForm'
-import Container from './Container'
-
-export interface JobFormTypes {
-  title: string
-  category: JobCategories
-  status: JobStatus
-}
+import { useMemo, useState } from 'react'
+import type { JobCategories, JobStatus, Job } from '../types/jobForm'
+import WideContainer from './WideContainer'
+import JobColumn from './JobColumn'
 
 const JOB_STATUS_MAP: Record<JobStatus, string> = {
   start: 'Start Process',
@@ -19,53 +14,110 @@ const JOB_STATUS_VALUES: JobStatus[] = Object.keys(
   JOB_STATUS_MAP,
 ) as JobStatus[]
 
+const isTitleValid = (title: string) => {
+  return title.length > 0
+}
+
 export default function JobForm() {
-  const [formData, setFormData] = useState<JobFormTypes>({
+  const [formData, setFormData] = useState<Job>({
     title: '',
-    category: 'Read Email' as JobCategories,
+    category: 'Read Email',
     status: 'stopped',
   })
-  const [isValid, setIsValid] = useState(false)
+
+  const [jobs, setJobs] = useState<Job[]>([])
+  const [titleTouched, setTitleTouched] = useState(false)
+  const groupedJobs = useMemo(
+    () =>
+      jobs.reduce(
+        (acc, job) => {
+          if (!acc[job.status]) {
+            acc[job.status] = []
+          }
+          acc[job.status].push(job)
+          return acc
+        },
+        {} as Record<JobStatus, Job[]>,
+      ),
+    [jobs],
+  )
 
   const handleChange = (
-    e:
-      | React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-      | { target: { name: string; value: string } },
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target
-    if (formData.title.length > 0) {
-      setIsValid(true)
-    } else {
-      setIsValid(false)
+
+    setFormData((prevFormData) => {
+      const newFormData = { ...prevFormData }
+      switch (name) {
+        case 'title':
+          newFormData.title = value
+          break
+        case 'category':
+          newFormData.category = value as JobCategories
+          break
+        case 'status':
+          newFormData.status = value as JobStatus
+          break
+        default:
+          console.warn(`Unhandled form field ${name}`)
+          break
+      }
+      return newFormData
+    })
+
+    if (name === 'title') {
+      setTitleTouched(true)
     }
-    setFormData((prevFormData) => ({ ...prevFormData, [name]: value }))
+  }
+
+  const handleCategoryClick = (category: JobCategories) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      category: category,
+    }))
+    setTitleTouched(true)
   }
 
   const handleAddJob = () => {
-    if (isValid) {
-      console.log(formData)
-      setFormData((prevFormData) => ({ ...prevFormData, title: '' }))
-      setIsValid(false)
+    const isFormCurrentlyValid = isTitleValid(formData.title)
+    if (!isFormCurrentlyValid) {
+      setTitleTouched(true)
+      return
     }
+
+    setJobs((prevJobs) => [...prevJobs, formData])
+    console.log(formData)
+    console.log(groupedJobs)
+    setFormData({
+      title: '',
+      category: 'Read Email',
+      status: 'stopped',
+    })
+    setTitleTouched(false)
   }
+  const showTitleError = titleTouched && !isTitleValid(formData.title)
 
   return (
-    <Container>
+    <WideContainer>
       <div>
         <div>Job Form</div>
-        <form>
+        <form onSubmit={(e) => e.preventDefault()}>
           <div>
             <input
               type="text"
               name="title"
               onChange={handleChange}
+              onBlur={() => setTitleTouched(true)}
               value={formData.title}
               className="m-1 rounded-lg border-2 border-orange-400 bg-stone-300 px-2 text-base outline-0"
               placeholder="enter job..."
             />
-            <div className="text-sm font-bold text-red-600" hidden={isValid}>
-              Please enter a job title.
-            </div>
+            {showTitleError && (
+              <div className="text-sm font-bold text-red-600">
+                Please enter a job title.
+              </div>
+            )}
           </div>
           <div className="text-sm">
             <button
@@ -73,11 +125,7 @@ export default function JobForm() {
               name="status"
               id="Read Email"
               value="Read Email"
-              onClick={() =>
-                handleChange({
-                  target: { name: 'category', value: 'Read Email' },
-                })
-              }
+              onClick={() => handleCategoryClick('Read Email')}
               className={`m-1 rounded-md border-2 border-black bg-green-600 px-1 text-xs text-white text-shadow-md text-shadow-stone-800 ${formData.category === 'Read Email' ? 'shadow-md shadow-stone-100' : null}`}
             >
               Read Email
@@ -87,11 +135,7 @@ export default function JobForm() {
               name="status"
               id="Send Emails"
               value="Send Emails"
-              onClick={() =>
-                handleChange({
-                  target: { name: 'category', value: 'Send Emails' },
-                })
-              }
+              onClick={() => handleCategoryClick('Send Emails')}
               className={`m-1 rounded-md border-2 border-black bg-red-500 px-1 text-xs text-white text-shadow-md text-shadow-stone-800 ${formData.category === 'Send Emails' ? 'shadow-md shadow-stone-100' : null}`}
             >
               Send Emails
@@ -101,11 +145,7 @@ export default function JobForm() {
               name="status"
               id="Web Parsing"
               value="Web Parsing"
-              onClick={() =>
-                handleChange({
-                  target: { name: 'category', value: 'Web Parsing' },
-                })
-              }
+              onClick={() => handleCategoryClick('Web Parsing')}
               className={`m-1 rounded-md border-2 border-black bg-blue-700 px-1 text-xs text-white text-shadow-md text-shadow-stone-800 ${formData.category === 'Web Parsing' ? 'shadow-md shadow-stone-100' : null}`}
             >
               Web Parsing
@@ -137,6 +177,18 @@ export default function JobForm() {
           </div>
         </form>
       </div>
-    </Container>
+      {jobs.length > 0 && (
+        <div className="flex flex-row justify-center gap-2 p-4">
+          {Object.keys(JOB_STATUS_MAP).map((statuskey) => {
+            const status = statuskey as JobStatus
+            const jobsForStatus = groupedJobs[status] || []
+            if (jobsForStatus.length === 0) {
+              return null
+            }
+            return <JobColumn key={status} jobs={jobsForStatus} />
+          })}
+        </div>
+      )}
+    </WideContainer>
   )
 }
