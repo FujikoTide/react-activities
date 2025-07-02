@@ -59,23 +59,19 @@ export default function Popover({ children, onClose, x, y }: PopoverProps) {
   }
 
   return ReactDOM.createPortal(
-    // Outer div acts as a transparent, full-screen overlay for detecting outside clicks
-    <div
-      className="fixed inset-0 z-50" // Covers the entire viewport, higher z-index
-      onClick={onClose} // Closes the popover when clicking anywhere outside its content
-    >
+    <div className="fixed inset-0 z-50" onClick={onClose}>
       <div
-        ref={contentRef} // Attach the ref to this div to measure its size
+        ref={contentRef}
         style={{
-          position: 'fixed', // Position relative to the viewport
-          top: `${y}px`, // Initial top position from click
-          left: `${x}px`, // Initial left position from click
+          position: 'fixed',
+          top: `${y}px`,
+          left: `${x}px`,
         }}
-        onClick={(e) => e.stopPropagation()} // Prevent clicks inside popover from bubbling up and closing it
+        onClick={(e) => e.stopPropagation()}
       >
         {children}
       </div>
     </div>,
-    popoverRoot, // The target DOM node for the portal
+    popoverRoot,
   )
 }

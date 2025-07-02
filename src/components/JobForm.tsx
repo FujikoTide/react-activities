@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import type { JobCategories, JobStatus, Job } from '../types/jobForm'
 import WideContainer from './WideContainer'
 import JobColumn2 from './JobColumn2'
@@ -11,6 +11,8 @@ const JOB_STATUS_MAP: Record<JobStatus, string> = {
   stopped: 'Stopped',
 }
 
+const STORAGE_KEY = 'itol-jobs'
+
 export type FormDataType = Omit<Job, 'id'>
 
 const JOB_STATUS_VALUES: JobStatus[] = Object.keys(
@@ -22,14 +24,31 @@ const isTitleValid = (title: string) => {
 }
 
 export default function JobForm() {
-  const [id, setId] = useState(0)
   const [formData, setFormData] = useState<FormDataType>({
     title: '',
     category: 'Read Email',
     status: 'stopped',
   })
 
-  const [jobs, setJobs] = useState<Job[]>([])
+  const [jobs, setJobs] = useState<Job[]>(() => {
+    try {
+      const storedJobs = localStorage.getItem(STORAGE_KEY)
+      return storedJobs ? JSON.parse(storedJobs) : []
+    } catch (err) {
+      console.error('Error parsing stored jobs:', err)
+      return []
+    }
+  })
+
+  const [id, setId] = useState(0)
+
+  useEffect(() => {
+    if (id === 0) {
+      const maxId = jobs.reduce((acc, job) => (job.id > acc ? job.id : acc), 0)
+      setId(maxId + 1)
+    }
+  }, [jobs, id])
+
   const [titleTouched, setTitleTouched] = useState(false)
   const groupedJobs = useMemo(() => {
     const grouped = jobs.reduce(
@@ -53,6 +72,14 @@ export default function JobForm() {
       }
     }
     return sortedGroupedJobs
+  }, [jobs])
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(jobs))
+    } catch (err) {
+      console.error('Failed to save jobs to local storage:', err)
+    }
   }, [jobs])
 
   const handleChange = (
@@ -210,12 +237,13 @@ export default function JobForm() {
           {Object.keys(JOB_STATUS_MAP).map((statuskey) => {
             const status = statuskey as JobStatus
             const jobsForStatus = groupedJobs[status] || []
-            if (jobsForStatus.length === 0) {
-              return null
-            }
+            // if (jobsForStatus.length === 0) {
+            //   return null
+            // }
             return (
               <JobColumn2
                 key={status}
+                statusType={status}
                 jobs={jobsForStatus}
                 handleChangeStatus={handleChangeStatus}
               />
