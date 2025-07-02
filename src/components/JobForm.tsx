@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react'
 import type { JobCategories, JobStatus, Job } from '../types/jobForm'
 import WideContainer from './WideContainer'
-import JobColumn from './JobColumn'
+import JobColumn2 from './JobColumn2'
+// import JobColumn from './JobColumn'
 
 const JOB_STATUS_MAP: Record<JobStatus, string> = {
   start: 'Start Process',
@@ -9,6 +10,8 @@ const JOB_STATUS_MAP: Record<JobStatus, string> = {
   completed: 'Completed',
   stopped: 'Stopped',
 }
+
+export type FormDataType = Omit<Job, 'id'>
 
 const JOB_STATUS_VALUES: JobStatus[] = Object.keys(
   JOB_STATUS_MAP,
@@ -19,7 +22,8 @@ const isTitleValid = (title: string) => {
 }
 
 export default function JobForm() {
-  const [formData, setFormData] = useState<Job>({
+  const [id, setId] = useState(0)
+  const [formData, setFormData] = useState<FormDataType>({
     title: '',
     category: 'Read Email',
     status: 'stopped',
@@ -27,20 +31,29 @@ export default function JobForm() {
 
   const [jobs, setJobs] = useState<Job[]>([])
   const [titleTouched, setTitleTouched] = useState(false)
-  const groupedJobs = useMemo(
-    () =>
-      jobs.reduce(
-        (acc, job) => {
-          if (!acc[job.status]) {
-            acc[job.status] = []
-          }
-          acc[job.status].push(job)
-          return acc
-        },
-        {} as Record<JobStatus, Job[]>,
-      ),
-    [jobs],
-  )
+  const groupedJobs = useMemo(() => {
+    const grouped = jobs.reduce(
+      (acc, job) => {
+        if (!acc[job.status]) {
+          acc[job.status] = []
+        }
+        acc[job.status].push(job)
+        return acc
+      },
+      {} as Record<JobStatus, Job[]>,
+    )
+
+    const sortedGroupedJobs: Partial<Record<JobStatus, Job[]>> = {}
+    for (const status in grouped) {
+      if (Object.prototype.hasOwnProperty.call(grouped, status)) {
+        const currentStatus = status as JobStatus
+        sortedGroupedJobs[currentStatus] = [...grouped[currentStatus]].sort(
+          (a, b) => a.id - b.id,
+        )
+      }
+    }
+    return sortedGroupedJobs
+  }, [jobs])
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -81,12 +94,14 @@ export default function JobForm() {
 
   const handleAddJob = () => {
     const isFormCurrentlyValid = isTitleValid(formData.title)
+    const jobId = id
     if (!isFormCurrentlyValid) {
       setTitleTouched(true)
       return
     }
 
-    setJobs((prevJobs) => [...prevJobs, formData])
+    setJobs((prevJobs) => [...prevJobs, { id: jobId, ...formData }])
+    setId((prevId) => prevId + 1)
     console.log(formData)
     console.log(groupedJobs)
     setFormData({
@@ -96,6 +111,19 @@ export default function JobForm() {
     })
     setTitleTouched(false)
   }
+
+  const handleChangeStatus = (jobId: number, jobStatus: JobStatus) => {
+    console.log(jobId, jobStatus)
+    setJobs((prevJobs) => {
+      return prevJobs.map((job) => {
+        if (job.id === jobId) {
+          return { ...job, status: jobStatus }
+        }
+        return job
+      })
+    })
+  }
+
   const showTitleError = titleTouched && !isTitleValid(formData.title)
 
   return (
@@ -185,7 +213,13 @@ export default function JobForm() {
             if (jobsForStatus.length === 0) {
               return null
             }
-            return <JobColumn key={status} jobs={jobsForStatus} />
+            return (
+              <JobColumn2
+                key={status}
+                jobs={jobsForStatus}
+                handleChangeStatus={handleChangeStatus}
+              />
+            )
           })}
         </div>
       )}

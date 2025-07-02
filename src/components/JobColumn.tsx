@@ -1,19 +1,12 @@
-import type { Job, JobCategories, JobStatus } from '../types/jobForm'
+import {
+  CATEGORY_COLOUR_MAP,
+  STATUS_COLOUR_MAP,
+  type Job,
+  type JobStatus,
+} from '../types/jobForm'
 
 interface JobColumProps {
   jobs: Job[]
-}
-
-const CATEGORY_COLOUR_MAP: Record<JobCategories, string> = {
-  'Read Email': 'bg-green-600/70',
-  'Send Emails': 'bg-red-500/70',
-  'Web Parsing': 'bg-blue-700/70',
-}
-const STATUS_COLOUR_MAP: Record<JobStatus, string> = {
-  completed: 'text-blue-700',
-  running: 'text-orange-500',
-  start: 'text-green-700',
-  stopped: 'text-red-500',
 }
 
 export default function JobColumn({ jobs }: JobColumProps) {
@@ -28,7 +21,10 @@ export default function JobColumn({ jobs }: JobColumProps) {
       <div className="pb-1">{currentJobsStatus}</div>
       <div className="flex flex-col gap-2">
         {jobs.map((job: Job) => (
-          <div className="flex flex-col rounded-sm border-1 border-black">
+          <div
+            key={job.id}
+            className="flex flex-col rounded-sm border-1 border-black"
+          >
             <div className="rounded-t-sm bg-neutral-500 p-2 text-xl text-zinc-800">
               {titleCase(job.title)}
             </div>
@@ -38,7 +34,7 @@ export default function JobColumn({ jobs }: JobColumProps) {
               {job.category}
             </div>
             <div
-              className={`rounded-b-sm bg-neutral-400 p-2 text-lg ${STATUS_COLOUR_MAP[job.status]}`}
+              className={`rounded-b-sm bg-neutral-400 p-2 text-lg ${STATUS_COLOUR_MAP[job.status]} cursor-pointer hover:bg-neutral-300`}
             >
               {job.status}
             </div>
