@@ -2,6 +2,7 @@ import {
   CATEGORY_COLOUR_MAP,
   STATUS_COLOUR_MAP,
   type Job,
+  type JobCategories,
   type JobStatus,
 } from '../types/jobForm'
 import React, { useState } from 'react'
@@ -16,12 +17,14 @@ interface JobColumProps {
   jobs: Job[]
   statusType: JobStatus
   handleChangeStatus: (jobId: number, jobStatus: JobStatus) => void
+  handleDeleteJob: (jobId: number) => void
 }
 
 export default function JobColumn2({
   jobs,
   statusType,
   handleChangeStatus,
+  handleDeleteJob,
 }: JobColumProps) {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
   const [popoverCoords, setPopoverCoords] = useState<ClickCoordinates | null>(
@@ -77,7 +80,6 @@ export default function JobColumn2({
       onDragOver={handleDragOver}
       onDrop={handleDrop}
       onDragLeave={handleDragLeave}
-      onDragEnd={handleDragEnd}
     >
       <div className="pb-1">{statusType}</div>
       <div className="flex flex-col gap-2">
@@ -95,15 +97,27 @@ export default function JobColumn2({
             className="flex flex-col rounded-sm border-1 border-black shadow-xs shadow-stone-600"
             draggable
             onDragStart={(e) => handleDragStart(e, job)}
+            onDragEnd={handleDragEnd}
           >
-            <div className="rounded-t-sm bg-neutral-500 p-2 text-xl text-zinc-800">
-              {`${job.id} ${titleCase(job.title)}`}
+            <div className="flex cursor-pointer flex-row justify-between rounded-t-sm bg-neutral-500 p-2 text-xl text-zinc-800">
+              <div>{`${titleCase(job.title)}`}</div>
+              <div
+                onClick={() => handleDeleteJob(job.id)}
+                className="text-md flex h-4 w-4 items-center justify-center rounded-sm border-2 border-black bg-red-500 p-0 text-white text-shadow-md text-shadow-stone-800"
+              >
+                &times;
+              </div>
             </div>
-            <div
-              className={`p-2 text-lg text-zinc-200 ${CATEGORY_COLOUR_MAP[job.category]}`}
-            >
-              {job.category}
-            </div>
+            {job.categories.map((category: JobCategories) => {
+              return (
+                <div
+                  key={category}
+                  className={`p-2 text-lg text-zinc-200 ${CATEGORY_COLOUR_MAP[category]}`}
+                >
+                  {category}
+                </div>
+              )
+            })}
             <div
               className={`rounded-b-sm bg-neutral-400 p-2 text-lg ${STATUS_COLOUR_MAP[job.status]} cursor-pointer hover:bg-neutral-300`}
               onClick={(e) => handleClickToOpenPopover(e, job)}

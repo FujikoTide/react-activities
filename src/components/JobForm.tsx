@@ -1,7 +1,13 @@
 import { useEffect, useMemo, useState } from 'react'
-import type { JobCategories, JobStatus, Job } from '../types/jobForm'
+import {
+  type JobCategories,
+  type JobStatus,
+  type Job,
+  ALL_JOB_CATEGORIES,
+} from '../types/jobForm'
 import WideContainer from './WideContainer'
 import JobColumn2 from './JobColumn2'
+import useMultiSelect from '../hooks/useMultiSelect'
 // import JobColumn from './JobColumn'
 
 const JOB_STATUS_MAP: Record<JobStatus, string> = {
@@ -26,7 +32,7 @@ const isTitleValid = (title: string) => {
 export default function JobForm() {
   const [formData, setFormData] = useState<FormDataType>({
     title: '',
-    category: 'Read Email',
+    categories: ['Read Email'],
     status: 'stopped',
   })
 
@@ -40,6 +46,13 @@ export default function JobForm() {
     }
   })
 
+  const {
+    selectedItems: currentCategories,
+    toggleItem: toggleCategorySelection,
+    isSelected: isCategoryCurrentlySelected,
+    areNoItemsSelected: areNoCategoriesSelectedByHook,
+  } = useMultiSelect<JobCategories>(formData.categories)
+
   const [id, setId] = useState(0)
 
   useEffect(() => {
@@ -48,6 +61,13 @@ export default function JobForm() {
       setId(maxId + 1)
     }
   }, [jobs, id])
+
+  useEffect(() => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      categories: currentCategories,
+    }))
+  }, [currentCategories])
 
   const [titleTouched, setTitleTouched] = useState(false)
   const groupedJobs = useMemo(() => {
@@ -74,6 +94,8 @@ export default function JobForm() {
     return sortedGroupedJobs
   }, [jobs])
 
+  const areNoCategoriesSelected = areNoCategoriesSelectedByHook
+
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(jobs))
@@ -93,9 +115,6 @@ export default function JobForm() {
         case 'title':
           newFormData.title = value
           break
-        case 'category':
-          newFormData.category = value as JobCategories
-          break
         case 'status':
           newFormData.status = value as JobStatus
           break
@@ -111,19 +130,14 @@ export default function JobForm() {
     }
   }
 
-  const handleCategoryClick = (category: JobCategories) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      category: category,
-    }))
-    setTitleTouched(true)
-  }
-
   const handleAddJob = () => {
     const isFormCurrentlyValid = isTitleValid(formData.title)
     const jobId = id
     if (!isFormCurrentlyValid) {
       setTitleTouched(true)
+      return
+    }
+    if (areNoCategoriesSelected) {
       return
     }
 
@@ -133,7 +147,7 @@ export default function JobForm() {
     console.log(groupedJobs)
     setFormData({
       title: '',
-      category: 'Read Email',
+      categories: ['Read Email'],
       status: 'stopped',
     })
     setTitleTouched(false)
@@ -148,6 +162,12 @@ export default function JobForm() {
         }
         return job
       })
+    })
+  }
+
+  const handleDeleteJob = (jobId: number) => {
+    setJobs((prevJobs) => {
+      return prevJobs.filter((job) => job.id !== jobId)
     })
   }
 
@@ -175,36 +195,28 @@ export default function JobForm() {
             )}
           </div>
           <div className="text-sm">
-            <button
-              type="button"
-              name="status"
-              id="Read Email"
-              value="Read Email"
-              onClick={() => handleCategoryClick('Read Email')}
-              className={`m-1 rounded-md border-2 border-black bg-green-600 px-1 text-xs text-white text-shadow-md text-shadow-stone-800 ${formData.category === 'Read Email' ? 'shadow-md shadow-stone-100' : null}`}
-            >
-              Read Email
-            </button>
-            <button
-              type="button"
-              name="status"
-              id="Send Emails"
-              value="Send Emails"
-              onClick={() => handleCategoryClick('Send Emails')}
-              className={`m-1 rounded-md border-2 border-black bg-red-500 px-1 text-xs text-white text-shadow-md text-shadow-stone-800 ${formData.category === 'Send Emails' ? 'shadow-md shadow-stone-100' : null}`}
-            >
-              Send Emails
-            </button>
-            <button
-              type="button"
-              name="status"
-              id="Web Parsing"
-              value="Web Parsing"
-              onClick={() => handleCategoryClick('Web Parsing')}
-              className={`m-1 rounded-md border-2 border-black bg-blue-700 px-1 text-xs text-white text-shadow-md text-shadow-stone-800 ${formData.category === 'Web Parsing' ? 'shadow-md shadow-stone-100' : null}`}
-            >
-              Web Parsing
-            </button>
+            {ALL_JOB_CATEGORIES.map((category) => (
+              <button
+                key={category}
+                type="button"
+                name="status"
+                id="Read Email"
+                value="Read Email"
+                onClick={() => {
+                  toggleCategorySelection(category)
+                  setTitleTouched(true)
+                }}
+                className={`m-1 rounded-md border-2 border-black ${category === 'Read Email' ? 'bg-green-600' : category === 'Send Emails' ? 'bg-red-500' : 'bg-blue-700'} px-1 text-xs text-white text-shadow-md text-shadow-stone-800 ${isCategoryCurrentlySelected(category) ? 'shadow-md shadow-stone-100' : ''}`}
+              >
+                {category}
+              </button>
+            ))}
+
+            {areNoCategoriesSelected && (
+              <div className="text-sm font-bold text-red-600">
+                Please select a category.
+              </div>
+            )}
           </div>
           <div>
             <select
@@ -246,6 +258,7 @@ export default function JobForm() {
                 statusType={status}
                 jobs={jobsForStatus}
                 handleChangeStatus={handleChangeStatus}
+                handleDeleteJob={handleDeleteJob}
               />
             )
           })}

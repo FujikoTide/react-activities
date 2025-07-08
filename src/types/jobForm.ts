@@ -1,10 +1,16 @@
 export type JobCategories = 'Read Email' | 'Web Parsing' | 'Send Emails'
 export type JobStatus = 'start' | 'running' | 'completed' | 'stopped'
 
+export const ALL_JOB_CATEGORIES: JobCategories[] = [
+  'Read Email',
+  'Web Parsing',
+  'Send Emails',
+]
+
 export interface Job {
   id: number
   title: string
-  category: JobCategories
+  categories: JobCategories[]
   status: JobStatus
 }
 

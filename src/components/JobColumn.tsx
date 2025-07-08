@@ -29,9 +29,9 @@ export default function JobColumn({ jobs }: JobColumProps) {
               {titleCase(job.title)}
             </div>
             <div
-              className={`p-2 text-lg text-zinc-200 ${CATEGORY_COLOUR_MAP[job.category]}`}
+              className={`p-2 text-lg text-zinc-200 ${CATEGORY_COLOUR_MAP[job.categories]}`}
             >
-              {job.category}
+              {job.categories}
             </div>
             <div
               className={`rounded-b-sm bg-neutral-400 p-2 text-lg ${STATUS_COLOUR_MAP[job.status]} cursor-pointer hover:bg-neutral-300`}
