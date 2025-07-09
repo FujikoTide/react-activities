@@ -38,7 +38,11 @@ export default function BotListManager() {
   const displayBot = (bot: BotListTypes) => {
     return (
       <div className="m-2 rounded-2xl border-2 border-black bg-stone-600 px-4 py-2 text-stone-300">
-        <DeleteButton size="lg" onClick={() => handleDeleteBot(bot.id)} />
+        <DeleteButton
+          className="my-1"
+          size="lg"
+          onClick={() => handleDeleteBot(bot.id)}
+        />
         <div className="flex justify-between">
           <div>ID: </div>
           <div>{bot.id}</div>

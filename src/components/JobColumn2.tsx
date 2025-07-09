@@ -102,7 +102,11 @@ export default function JobColumn2({
           >
             <div className="flex cursor-pointer flex-row justify-between bg-neutral-500">
               <div className="p-2 text-xl text-zinc-800">{`${titleCase(job.title)}`}</div>
-              <DeleteButton size="sm" onClick={() => handleDeleteJob(job.id)} />
+              <DeleteButton
+                className="m-1"
+                size="sm"
+                onClick={() => handleDeleteJob(job.id)}
+              />
             </div>
             {job.categories.map((category: JobCategories) => {
               return (

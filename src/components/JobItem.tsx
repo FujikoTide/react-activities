@@ -15,7 +15,7 @@ const STATUSMAP: Record<JobStatus, string> = {
 export default function JobItem({ job, onDelete }: JobItemProps) {
   return (
     <div className="m-2 rounded-2xl border-2 border-black bg-stone-600 px-4 py-2 text-stone-300">
-      <DeleteButton size="md" onClick={onDelete} />
+      <DeleteButton className="my-1" size="md" onClick={onDelete} />
 
       <div className="flex justify-between">
         <div>ID: </div>

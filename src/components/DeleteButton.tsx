@@ -14,7 +14,7 @@ export default function DeleteButton({
   className,
 }: DeleteButtonProps) {
   const buttonBaseClasses =
-    'm-1 flex cursor-pointer items-center justify-center rounded-sm border-2 border-black bg-red-500 text-white'
+    'flex cursor-pointer items-center justify-center rounded-sm border-2 border-black bg-red-500 text-white'
   let buttonClasses = ''
   let crossSizeClasses = ''
 
