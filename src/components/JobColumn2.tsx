@@ -7,6 +7,7 @@ import {
 } from '../types/jobForm'
 import React, { useState } from 'react'
 import Popover from './Popover'
+import DeleteButton from './DeleteButton'
 
 interface ClickCoordinates {
   x: number
@@ -94,19 +95,14 @@ export default function JobColumn2({
         {jobs.map((job: Job) => (
           <div
             key={job.id}
-            className="flex flex-col rounded-sm border-1 border-black shadow-xs shadow-stone-600"
+            className="flex flex-col overflow-hidden rounded-sm border-1 border-black shadow-xs shadow-stone-600"
             draggable
             onDragStart={(e) => handleDragStart(e, job)}
             onDragEnd={handleDragEnd}
           >
-            <div className="flex cursor-pointer flex-row justify-between rounded-t-sm bg-neutral-500 p-2 text-xl text-zinc-800">
-              <div>{`${titleCase(job.title)}`}</div>
-              <div
-                onClick={() => handleDeleteJob(job.id)}
-                className="text-md flex h-4 w-4 items-center justify-center rounded-sm border-2 border-black bg-red-500 p-0 text-white text-shadow-md text-shadow-stone-800"
-              >
-                &times;
-              </div>
+            <div className="flex cursor-pointer flex-row justify-between bg-neutral-500">
+              <div className="p-2 text-xl text-zinc-800">{`${titleCase(job.title)}`}</div>
+              <DeleteButton size="sm" onClick={() => handleDeleteJob(job.id)} />
             </div>
             {job.categories.map((category: JobCategories) => {
               return (
@@ -119,7 +115,7 @@ export default function JobColumn2({
               )
             })}
             <div
-              className={`rounded-b-sm bg-neutral-400 p-2 text-lg ${STATUS_COLOUR_MAP[job.status]} cursor-pointer hover:bg-neutral-300`}
+              className={`bg-neutral-400 p-2 text-lg ${STATUS_COLOUR_MAP[job.status]} cursor-pointer hover:bg-neutral-300`}
               onClick={(e) => handleClickToOpenPopover(e, job)}
             >
               {job.status}

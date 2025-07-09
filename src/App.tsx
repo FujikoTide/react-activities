@@ -2,6 +2,7 @@ import AdvancedJobCounter from './components/AdvancedJobCounter'
 import BotListManager from './components/BotListManager'
 import Button from './components/Button'
 import DynamicForm from './components/DynamicForm'
+import InvestMentCalculator from './components/InvestMentCalculator'
 import JobBoard from './components/JobBoard'
 import JobCounter from './components/JobCounter'
 import JobForm from './components/JobForm'
@@ -24,6 +25,7 @@ function App() {
       <ModularJobBoard />
       <StatusBoard />
       <JobForm />
+      <InvestMentCalculator />
     </div>
   )
 }

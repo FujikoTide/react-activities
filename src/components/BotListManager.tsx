@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Container from './Container'
+import DeleteButton from './DeleteButton'
 
 export type BotStatusString = 'Running' | 'Completed' | 'Stopped'
 
@@ -37,12 +38,7 @@ export default function BotListManager() {
   const displayBot = (bot: BotListTypes) => {
     return (
       <div className="m-2 rounded-2xl border-2 border-black bg-stone-600 px-4 py-2 text-stone-300">
-        <div
-          onClick={() => handleDeleteBot(bot.id)}
-          className="text-md my-1 w-8 cursor-pointer rounded-sm border-2 border-black bg-red-500 px-2 text-right text-white text-shadow-md text-shadow-stone-800"
-        >
-          X
-        </div>
+        <DeleteButton size="lg" onClick={() => handleDeleteBot(bot.id)} />
         <div className="flex justify-between">
           <div>ID: </div>
           <div>{bot.id}</div>

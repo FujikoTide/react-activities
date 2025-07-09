@@ -1,4 +1,5 @@
 import type { Job, JobStatus } from '../types/jobs'
+import DeleteButton from './DeleteButton'
 
 interface JobItemProps {
   job: Job
@@ -14,12 +15,8 @@ const STATUSMAP: Record<JobStatus, string> = {
 export default function JobItem({ job, onDelete }: JobItemProps) {
   return (
     <div className="m-2 rounded-2xl border-2 border-black bg-stone-600 px-4 py-2 text-stone-300">
-      <div
-        onClick={onDelete}
-        className="text-md my-1 w-8 cursor-pointer rounded-sm border-2 border-black bg-red-500 px-2 text-right text-white text-shadow-md text-shadow-stone-800"
-      >
-        X
-      </div>
+      <DeleteButton size="md" onClick={onDelete} />
+
       <div className="flex justify-between">
         <div>ID: </div>
         <div>{job.id}</div>
