@@ -10,7 +10,7 @@ export default function InvestmentCalculatorHeader({
   subtitle,
 }: InvestmentCalculatorHeaderProps) {
   return (
-    <header>
+    <header id="header">
       <div className="flex flex-row items-center">
         <div>
           <img className="h-20 w-20" src={logo} alt="logo" />
