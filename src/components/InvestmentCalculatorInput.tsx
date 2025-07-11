@@ -1,7 +1,5 @@
 import type { InvestmentCalculatorDataProps } from './InvestMentCalculator'
 
-const CURRENCIES = ['GBP', 'USD', 'EUR', 'JPY']
-
 interface InvestmentCalculatorInputProps {
   userInput: InvestmentCalculatorDataProps
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
@@ -78,6 +76,7 @@ export default function InvestmentCalculatorInput({
         </div>
         <div>
           <button
+            type="button"
             className="m-2 cursor-pointer border-1 border-black bg-green-300/50 p-2 hover:bg-red-300"
             onClick={resetForm}
           >

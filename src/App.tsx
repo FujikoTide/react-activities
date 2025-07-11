@@ -7,6 +7,7 @@ import JobBoard from './components/JobBoard'
 import JobCounter from './components/JobCounter'
 import JobForm from './components/JobForm'
 import ModularJobBoard from './components/ModularJobBoard'
+import PasswordGenerator from './components/PasswordGenerator'
 import StatusBoard from './components/StatusBoard'
 import VariableDisplay from './components/VariableDisplay'
 import ProfileCards from './pages/ProfileCards'
@@ -26,6 +27,7 @@ function App() {
       <StatusBoard />
       <JobForm />
       <InvestMentCalculator />
+      <PasswordGenerator />
     </div>
   )
 }
