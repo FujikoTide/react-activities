@@ -1,5 +1,13 @@
 import type { InvestmentCalculatorDataProps } from '../components/InvestMentCalculator'
 
+export interface AnnualDataProps {
+  year: number
+  interest: number
+  investmentValue: number
+  totalInterest: number
+  investedCapital: number
+}
+
 export function calculateInvestmentResults({
   initialInvestment,
   annualInvestment,

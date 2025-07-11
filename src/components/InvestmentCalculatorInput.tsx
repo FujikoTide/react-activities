@@ -16,7 +16,7 @@ export default function InvestmentCalculatorInput({
   return (
     <section id="user-input" className="mx-auto w-3/4 p-2">
       <form>
-        <div className="input-group flex flex-row justify-between border-1 border-black p-2 odd:bg-green-300/50 even:bg-red-300">
+        <div className="input-group flex flex-row justify-between border-1 border-b-0 border-black p-2 odd:bg-green-300/50 even:bg-red-300">
           <div>
             <label htmlFor="initialInvestment">Initial Investment ($)</label>
           </div>
@@ -31,7 +31,7 @@ export default function InvestmentCalculatorInput({
             />
           </div>
         </div>
-        <div className="input-group flex flex-row justify-between border-1 border-black p-2 odd:bg-green-300/50 even:bg-red-300">
+        <div className="input-group flex flex-row justify-between border-1 border-b-0 border-black p-2 odd:bg-green-300/50 even:bg-red-300">
           <div>
             <label htmlFor="annualInvestment">Annual Investment ($)</label>
           </div>
@@ -46,7 +46,7 @@ export default function InvestmentCalculatorInput({
             />
           </div>
         </div>
-        <div className="input-group flex flex-row justify-between border-1 border-black p-2 odd:bg-green-300/50 even:bg-red-300">
+        <div className="input-group flex flex-row justify-between border-1 border-b-0 border-black p-2 odd:bg-green-300/50 even:bg-red-300">
           <div>
             <label htmlFor="expectedReturn">Expected Return (%)</label>
           </div>
@@ -78,7 +78,7 @@ export default function InvestmentCalculatorInput({
         </div>
         <div>
           <button
-            className="m-2 cursor-pointer border-1 border-black bg-green-300/50 p-2"
+            className="m-2 cursor-pointer border-1 border-black bg-green-300/50 p-2 hover:bg-red-300"
             onClick={resetForm}
           >
             Reset Form

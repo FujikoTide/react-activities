@@ -1,3 +1,5 @@
+import { calculateInvestmentResults } from '../util/investment'
+import InvestmentCalculatorGraph from './InvestmentCalculatorGraph'
 import InvestmentCalculatorHeader from './InvestmentCalculatorHeader'
 import InvestmentCalculatorInput from './InvestmentCalculatorInput'
 import InvestmentCalculatorOutputData from './InvestmentCalculatorOutputData'
@@ -37,15 +39,23 @@ export default function InvestMentCalculator() {
     setUserInput(INITIAL_FORM_VALUES)
   }
 
+  const annualData = calculateInvestmentResults({
+    initialInvestment: userInput.initialInvestment,
+    annualInvestment: userInput.annualInvestment,
+    expectedReturn: userInput.expectedReturn,
+    duration: userInput.duration,
+  })
+
   return (
     <WideContainer>
-      <InvestmentCalculatorHeader />
+      <InvestmentCalculatorHeader title="Line Must Go In A Direction Investments" />
       <InvestmentCalculatorInput
         userInput={userInput}
         handleChange={handleChange}
         resetForm={resetForm}
       />
-      <InvestmentCalculatorOutputData {...userInput} />
+      <InvestmentCalculatorOutputData annualData={annualData} />
+      <InvestmentCalculatorGraph annualData={annualData} />
     </WideContainer>
   )
 }
