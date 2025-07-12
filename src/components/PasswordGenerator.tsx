@@ -75,17 +75,18 @@ const passwordStrength = (password: string) => {
   }, 0)
 }
 
-const minStrength = () => {
-  return (
-    passwordLengthBounds.min *
-    Object.values(passwordStrengthCharacterValues).reduce((prev, curr) => {
-      if (curr !== passwordStrengthCharacterValues.zero) {
-        prev = prev < curr ? prev : curr
-      }
-      return prev
-    }, Infinity)
-  )
-}
+// use for calculating scaling per password length - not implemented
+// const minStrength = () => {
+//   return (
+//     passwordLengthBounds.min *
+//     Object.values(passwordStrengthCharacterValues).reduce((prev, curr) => {
+//       if (curr !== passwordStrengthCharacterValues.zero) {
+//         prev = prev < curr ? prev : curr
+//       }
+//       return prev
+//     }, Infinity)
+//   )
+// }
 
 const maxStrength = () => {
   return (
@@ -121,7 +122,6 @@ const getStrengthBarValues = (strength: number) => {
 
 const getBarValues = (password: string) => {
   const strength = strengthAsPercentageOfMax(password)
-  console.log(strength)
   return getStrengthBarValues(strength)
 }
 
@@ -184,10 +184,6 @@ export default function PasswordGenerator({ initialValue = '' }) {
   }
 
   const barValues = getBarValues(password)
-
-  // add strength gauge
-  // add minium count of extra characters to password generator (upper, numbers, special)
-  // add multiple password output
 
   return (
     <WideContainer>
