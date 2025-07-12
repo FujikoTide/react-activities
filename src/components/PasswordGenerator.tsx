@@ -17,11 +17,27 @@ export default function PasswordGenerator({ initialValue = '' }) {
   const [password, setPassword] = useState(initialValue)
   const [passwordFlags, setPasswordFlags] = useState({
     lengthOfPassword: 10,
-    uppercase: true,
-    numbers: true,
-    excludeSimilar: true,
-    specialCharacters: true,
+    uppercase: false,
+    numbers: false,
+    excludeSimilar: false,
+    specialCharacters: false,
   })
+
+  const formHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.type === 'checkbox') {
+      const { name, checked } = e.target
+      setPasswordFlags((prevPasswordFlags) => ({
+        ...prevPasswordFlags,
+        [name]: Number(checked),
+      }))
+    } else {
+      const { name, value } = e.target
+      setPasswordFlags((prevPasswordFlags) => ({
+        ...prevPasswordFlags,
+        [name]: Number(value),
+      }))
+    }
+  }
 
   useEffect(() => {
     const generatePassword = () => {
@@ -51,6 +67,14 @@ export default function PasswordGenerator({ initialValue = '' }) {
     setPassword(generatePassword())
   }, [passwordFlags])
 
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(password)
+  }
+
+  // add strength gauge
+  // add minium count of extra characters to password generator (upper, numbers, special)
+  // add multiple password output
+
   return (
     <WideContainer>
       <div>
@@ -60,14 +84,19 @@ export default function PasswordGenerator({ initialValue = '' }) {
               <div className="flex flex-row justify-between">
                 <div>
                   <label htmlFor="password-length" className="text-base">
-                    Password Length
+                    Password Length (10-30)
                   </label>
                 </div>
                 <div>
                   <input
                     id="password-length"
-                    className="w-15 text-right text-base outline-2 focus:ring-0"
+                    className="w-15 text-right text-base focus:ring-0 focus:outline-none"
                     type="number"
+                    min={10}
+                    max={30}
+                    name="lengthOfPassword"
+                    value={passwordFlags.lengthOfPassword}
+                    onChange={formHandler}
                   />
                 </div>
               </div>
@@ -78,7 +107,14 @@ export default function PasswordGenerator({ initialValue = '' }) {
                   </label>
                 </div>
                 <div>
-                  <input id="uppercase" className="h-5 w-5" type="checkbox" />
+                  <input
+                    name="uppercase"
+                    id="uppercase"
+                    className="h-5 w-5"
+                    type="checkbox"
+                    checked={passwordFlags.uppercase}
+                    onChange={formHandler}
+                  />
                 </div>
               </div>
               <div className="flex flex-row justify-between">
@@ -88,7 +124,14 @@ export default function PasswordGenerator({ initialValue = '' }) {
                   </label>
                 </div>
                 <div>
-                  <input id="numbers" className="h-5 w-5" type="checkbox" />
+                  <input
+                    name="numbers"
+                    id="numbers"
+                    className="h-5 w-5"
+                    type="checkbox"
+                    checked={passwordFlags.numbers}
+                    onChange={formHandler}
+                  />
                 </div>
               </div>
               <div className="flex flex-row justify-between">
@@ -99,9 +142,12 @@ export default function PasswordGenerator({ initialValue = '' }) {
                 </div>
                 <div>
                   <input
+                    name="specialCharacters"
                     id="special-characters"
                     className="h-5 w-5"
                     type="checkbox"
+                    checked={passwordFlags.specialCharacters}
+                    onChange={formHandler}
                   />
                 </div>
               </div>
@@ -113,21 +159,35 @@ export default function PasswordGenerator({ initialValue = '' }) {
                 </div>
                 <div>
                   <input
+                    name="excludeSimilar"
                     id="exclude-similar"
                     className="h-5 w-5"
                     type="checkbox"
+                    checked={passwordFlags.excludeSimilar}
+                    onChange={formHandler}
                   />
                 </div>
               </div>
             </div>
             <div className="flex w-3/5 flex-col gap-1 pl-2 text-left">
               <div className="flex flex-row">
-                <div className="pr-2 text-base">password:</div>
-                <div className="text-base">{password}</div>
+                <div className="pr-1 text-sm">password:</div>
+                <div className="text-sm">{password}</div>
               </div>
               <div className="flex flex-row">
-                <div className="pr-2 text-base">strength:</div>
-                <div className="mt-1 h-4 w-[80%] bg-amber-300"></div>
+                <div className="pr-2 text-sm">strength:</div>
+                <div className="flex h-5 w-[80%] items-center justify-center bg-amber-300 text-base font-bold text-black">
+                  weak
+                </div>
+              </div>
+              <div className="flex flex-row">
+                <button
+                  type="button"
+                  onClick={copyToClipboard}
+                  className="w-full cursor-pointer border-1 border-black bg-green-300/50 hover:bg-red-300"
+                >
+                  Copy To Clipboard
+                </button>
               </div>
             </div>
           </div>
