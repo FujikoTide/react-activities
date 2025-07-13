@@ -35,7 +35,7 @@ export default function ShowTicket({ ticket }: ShowTicketProps) {
   return (
     <div
       onClick={toggleDetails}
-      className="m-2 rounded-2xl border-2 border-black bg-stone-800 px-4 py-2 text-stone-300"
+      className="m-2 cursor-pointer rounded-2xl border-2 border-black bg-stone-800 px-4 py-2 text-stone-300"
     >
       <div className="flex items-center justify-between gap-2">
         <div>
