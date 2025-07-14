@@ -70,6 +70,11 @@ export default function MovieReviewMain({
         movieRating: formData.rating,
       },
     ])
+    setFormData({
+      movieId: 0,
+      review: '',
+      rating: 0,
+    })
     handleCloseModal()
   }
 
