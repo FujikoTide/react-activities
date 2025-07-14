@@ -15,11 +15,11 @@ export default function Modal({ children, onClose }: ModalProps) {
 
   return ReactDOM.createPortal(
     <div
-      className="bg-opacity-50 fixed inset-0 z-50 flex items-center justify-center bg-black p-4"
+      className="bg-opacity-50 fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-lg rounded-lg bg-white p-6 shadow-xl"
+        className="relative w-full max-w-2xl rounded-lg bg-white p-6 shadow-xl"
         onClick={(e) => e.stopPropagation()}
       >
         <button

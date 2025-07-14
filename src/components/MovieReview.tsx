@@ -35,7 +35,11 @@ export default function MovieReview() {
   return (
     <WideContainer>
       <MovieReviewHeader />
-      <MovieReviewMain {...movieData} />
+      <MovieReviewMain
+        movieData={movieData}
+        reviewData={reviewData}
+        setReviewData={setReviewData}
+      />
       <MovieReviewInput
         getMovieData={getMovieData}
         handleSearch={handleSearch}
