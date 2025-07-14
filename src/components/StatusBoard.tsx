@@ -2,7 +2,7 @@ import WideContainer from './WideContainer'
 import TicketInfo from './TicketInfo'
 import type { Ticket, TicketType } from '../types/tickets'
 import { useState } from 'react'
-import AddTicketForm from './addTicketForm'
+import AddTicketForm from './AddTicketForm'
 
 export default function StatusBoard() {
   const [tickets, setTickets] = useState<Ticket[]>([
