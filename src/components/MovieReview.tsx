@@ -2,10 +2,11 @@ import { useState } from 'react'
 import useLocalStorage from '../hooks/useLocalStorage'
 import MovieReviewHeader from './MovieReviewHeader'
 import MovieReviewInput from './MovieReviewInput'
-import MovieReviewMain, { type MovieDataState } from './MovieReviewMain'
 import WideContainer from './WideContainer'
+import MovieReviewMain from './MovieReviewMain'
 import {
   queryMovies,
+  type MovieDataState,
   type ReviewDataState,
   type SearchTypeMapProps,
 } from '../util/movieReview'
@@ -14,7 +15,7 @@ const STORAGE_KEY = 'movieReviews'
 
 export default function MovieReview() {
   const [searchTerm, setSearchTerm] = useState('')
-  const [movieData, setMovieData] = useState<MovieDataState>({ data: null })
+  const [movieData, setMovieData] = useState<MovieDataState>(null)
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
     setSearchTerm(value)
@@ -32,7 +33,7 @@ export default function MovieReview() {
         searchTerm: searchTerm,
         searchType: 'search',
       })
-      setMovieData({ data: newData })
+      setMovieData(newData)
     } catch (error) {
       console.error(`Error when trying to search`, error)
     }
@@ -43,7 +44,7 @@ export default function MovieReview() {
   ) => {
     try {
       const newData = await queryMovies({ searchType: type })
-      setMovieData({ data: newData })
+      setMovieData(newData)
     } catch (error) {
       console.error(`Error when trying to get List`, error)
     }

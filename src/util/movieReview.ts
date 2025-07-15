@@ -1,5 +1,16 @@
 import axios from 'axios'
 
+export interface MovieReviewComponentProps {
+  movie: MovieDataItem
+}
+
+export type MovieDataState = MovieDataItem[] | null
+
+export interface ReviewState {
+  id: number
+  show: boolean
+}
+
 export interface MovieDataItem {
   backdrop_path: string
   genre_ids: number[]
@@ -11,6 +22,12 @@ export interface MovieDataItem {
   title: string
   vote_average: number
   vote_count: number
+}
+
+export interface FormDataState {
+  movieId: number
+  review: string
+  rating: number
 }
 
 export interface ReviewDataState {
@@ -72,4 +89,14 @@ export const queryMovies = async ({
   } catch (error) {
     console.error(`Error when trying to retrieve from ${queryUrl}`, error)
   }
+}
+
+export const getReviewCount = (
+  reviewData: ReviewDataState[],
+  movieId: number,
+) => {
+  const reviewCount = reviewData.filter(
+    (review) => review.movieId === movieId,
+  ).length
+  return reviewCount > 0 ? `Reviews (${reviewCount})` : 'No Reviews'
 }
