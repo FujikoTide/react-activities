@@ -4,7 +4,11 @@ import MovieReviewHeader from './MovieReviewHeader'
 import MovieReviewInput from './MovieReviewInput'
 import MovieReviewMain, { type MovieDataState } from './MovieReviewMain'
 import WideContainer from './WideContainer'
-import { queryMovies, type ReviewDataState } from '../util/movieReview'
+import {
+  queryMovies,
+  type ReviewDataState,
+  type SearchTypeMapProps,
+} from '../util/movieReview'
 
 const STORAGE_KEY = 'movieReviews'
 
@@ -34,6 +38,17 @@ export default function MovieReview() {
     }
   }
 
+  const getMovieDataByList = async (
+    type: Exclude<keyof SearchTypeMapProps, 'search'>,
+  ) => {
+    try {
+      const newData = await queryMovies({ searchType: type })
+      setMovieData({ data: newData })
+    } catch (error) {
+      console.error(`Error when trying to get List`, error)
+    }
+  }
+
   return (
     <WideContainer>
       <MovieReviewHeader />
@@ -44,6 +59,7 @@ export default function MovieReview() {
       />
       <MovieReviewInput
         getMovieData={getMovieData}
+        getMovieDataByList={getMovieDataByList}
         handleSearch={handleSearch}
         searchTerm={searchTerm}
       />

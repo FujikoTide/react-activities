@@ -20,22 +20,29 @@ export interface ReviewDataState {
   movieRating: number
 }
 
-interface SearchTypeMapProps {
+export interface SearchTypeMapProps {
   search: string
+  popular: string
+  'top rated': string
+  upcoming: string
 }
 
-interface QueryMovieProps {
-  searchTerm: string
+export interface QueryMovieProps {
+  searchTerm?: string
   searchType: keyof SearchTypeMapProps
 }
 
 const searchTypeMap: SearchTypeMapProps = {
   search: '/search/movie?query=',
+  popular: 'movie/popular?language=en-US&page=1',
+  'top rated': 'movie/top_rated?language=en-US&page=1',
+  upcoming: 'movie/upcoming?language=en-US&page=1',
 }
 
 const url = {
   base: 'https://api.themoviedb.org/3/',
-  defaultOptions: '&include_adult=false&language=en-US&page=1',
+  // defaultOptions: '&include_adult=false&language=en-US&page=1',
+  defaultOptions: '&language=en-US&page=1',
 }
 
 const options = {
@@ -47,10 +54,15 @@ const options = {
 }
 
 export const queryMovies = async ({
-  searchTerm,
   searchType,
+  searchTerm,
 }: QueryMovieProps) => {
-  const queryUrl = `${url.base}${searchTypeMap[searchType]}${searchTerm}${url.defaultOptions}`
+  let queryUrl
+  if (!searchTerm) {
+    queryUrl = `${url.base}${searchTypeMap[searchType]}`
+  } else {
+    queryUrl = `${url.base}${searchTypeMap[searchType]}${searchTerm}${url.defaultOptions}`
+  }
   try {
     const response = await axios.get(queryUrl, options)
     if (response.status === 200) {
@@ -58,9 +70,6 @@ export const queryMovies = async ({
     }
     return null
   } catch (error) {
-    console.error(
-      `Error when trying to retrieve from ${url.base}/${searchTerm}`,
-      error,
-    )
+    console.error(`Error when trying to retrieve from ${queryUrl}`, error)
   }
 }

@@ -127,12 +127,9 @@ export default function MovieReviewMain({
       <div>
         {movieData.data &&
           movieData.data.map((movie: MovieDataItem) => (
-            <div className="mb-2">
+            <div className="mb-2" key={movie.id}>
               <div>
-                <div
-                  key={movie.id}
-                  className="mx-auto flex w-full flex-row justify-between border-y-1 border-gray-600"
-                >
+                <div className="mx-auto flex w-full flex-row justify-between border-y-1 border-gray-600">
                   <div className="flex h-96 w-[40%] justify-center bg-black p-5">
                     {movie.poster_path ? (
                       <img
@@ -183,7 +180,10 @@ export default function MovieReviewMain({
                   reviewData
                     .filter((review) => review.movieId === movie.id)
                     .map((review) => (
-                      <div className="flex w-full flex-col justify-between">
+                      <div
+                        key={review.reviewId}
+                        className="flex w-full flex-col justify-between"
+                      >
                         <div className="flex w-full flex-row justify-between border-b-1 border-dashed border-stone-400 bg-neutral-300 p-5">
                           <div className="w-20 pr-2 text-4xl">
                             {review.movieRating}

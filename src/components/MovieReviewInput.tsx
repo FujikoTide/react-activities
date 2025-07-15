@@ -1,16 +1,42 @@
+import type { SearchTypeMapProps } from '../util/movieReview'
+
 export interface MovieReviewInputProps {
   getMovieData: (e: React.FormEvent) => Promise<void>
+  getMovieDataByList: (
+    type: Exclude<keyof SearchTypeMapProps, 'search'>,
+  ) => Promise<void>
   handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void
   searchTerm: string
 }
 
 export default function MovieReviewInput({
   getMovieData,
+  getMovieDataByList,
   handleSearch,
   searchTerm,
 }: MovieReviewInputProps) {
   return (
     <div className="bg-neutral-300 p-10 text-2xl font-bold">
+      <div className="mb-2 flex flex-row justify-evenly text-lg">
+        <div
+          className="cursor-pointer hover:text-orange-500"
+          onClick={() => getMovieDataByList('popular')}
+        >
+          Popular
+        </div>
+        <div
+          className="cursor-pointer hover:text-orange-500"
+          onClick={() => getMovieDataByList('upcoming')}
+        >
+          Upcoming
+        </div>
+        <div
+          className="cursor-pointer hover:text-orange-500"
+          onClick={() => getMovieDataByList('top rated')}
+        >
+          Top Rated
+        </div>
+      </div>
       <form onSubmit={getMovieData}>
         <div className="flex flex-row justify-center">
           <div>
@@ -21,6 +47,7 @@ export default function MovieReviewInput({
               type="text"
               onChange={handleSearch}
               className="mr-2 h-10 border-2 border-black bg-white p-2 outline-0"
+              placeholder="Search Movies..."
             />
           </div>
           <div>
