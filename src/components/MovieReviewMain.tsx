@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { type MovieDataItem, type ReviewDataState } from '../util/movieReview'
 import Modal from './Modal'
+import useId from '../hooks/useId'
 
 export interface MovieDataState {
   data: MovieDataItem[] | null
@@ -25,11 +26,22 @@ export default function MovieReviewMain({
 }: MovieReviewMainProps) {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [modalData, setModalData] = useState<MovieDataItem | null>(null)
+  const { id, setId, incrementID } = useId(0)
   const [formData, setFormData] = useState<FormDataState>({
     movieId: 0,
     review: '',
     rating: 0,
   })
+
+  useEffect(() => {
+    if (id === 0 && reviewData.length > 0) {
+      const maxId = reviewData.reduce(
+        (acc, review) => (review.reviewId > acc ? review.reviewId : acc),
+        0,
+      )
+      setId(maxId + 1)
+    }
+  }, [reviewData, id, setId])
 
   const handleOpenModal = (data: MovieDataItem) => {
     setIsModalOpen(true)
@@ -64,7 +76,7 @@ export default function MovieReviewMain({
     setReviewData((prevReviewData) => [
       ...prevReviewData,
       {
-        reviewId: 1,
+        reviewId: id,
         movieId: formData.movieId,
         movieReview: formData.review,
         movieRating: formData.rating,
@@ -75,6 +87,7 @@ export default function MovieReviewMain({
       review: '',
       rating: 0,
     })
+    incrementID()
     handleCloseModal()
   }
 

@@ -6,6 +6,8 @@ import MovieReviewMain, { type MovieDataState } from './MovieReviewMain'
 import WideContainer from './WideContainer'
 import { queryMovies, type ReviewDataState } from '../util/movieReview'
 
+const STORAGE_KEY = 'movieReviews'
+
 export default function MovieReview() {
   const [searchTerm, setSearchTerm] = useState('')
   const [movieData, setMovieData] = useState<MovieDataState>({ data: null })
@@ -15,7 +17,7 @@ export default function MovieReview() {
   }
 
   const [reviewData, setReviewData] = useLocalStorage<ReviewDataState[]>(
-    'movieReviews',
+    STORAGE_KEY,
     [],
   )
 
