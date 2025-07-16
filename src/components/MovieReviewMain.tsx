@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
-import {
-  type FormDataState,
-  type MovieDataItem,
-  type MovieReviewMainProps,
-  type ReviewState,
-} from '../util/movieReview'
 import useId from '../hooks/useId'
 import MovieReviewModal from './MovieReviewModal'
 import MovieReviewCard from './MovieReviewCard'
+import type {
+  FormDataState,
+  MovieDataItem,
+  MovieReviewMainProps,
+  ReviewState,
+} from '../types/movieReview'
 
 export default function MovieReviewMain({
   movieData,

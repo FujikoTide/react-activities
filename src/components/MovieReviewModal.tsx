@@ -1,4 +1,4 @@
-import type { MovieReviewModalProps } from '../util/movieReview'
+import type { MovieReviewModalProps } from '../types/movieReview'
 import Modal from './Modal'
 import MovieReviewModalContent from './MovieReviewModalContent'
 

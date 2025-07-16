@@ -1,4 +1,4 @@
-import type { MovieReviewComponentProps } from '../util/movieReview'
+import type { MovieReviewComponentProps } from '../types/movieReview'
 
 export default function MovieReviewPoster({
   movie,

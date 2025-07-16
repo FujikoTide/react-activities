@@ -1,4 +1,4 @@
-import type { MovieReviewModalContentType } from '../util/movieReview'
+import type { MovieReviewModalContentType } from '../types/movieReview'
 import MovieReviewModalForm from './MovieReviewModalForm'
 import MovieReviewPoster from './MovieReviewPoster'
 

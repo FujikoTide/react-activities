@@ -1,13 +1,4 @@
-import type { SearchTypeMapProps } from '../util/movieReview'
-
-export interface MovieReviewInputProps {
-  getMovieData: (e: React.FormEvent) => Promise<void>
-  getMovieDataByList: (
-    type: Exclude<keyof SearchTypeMapProps, 'search'>,
-  ) => Promise<void>
-  handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void
-  searchTerm: string
-}
+import type { MovieReviewInputProps } from '../types/movieReview'
 
 export default function MovieReviewInput({
   getMovieData,

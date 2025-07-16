@@ -1,72 +1,9 @@
 import axios from 'axios'
-
-export interface MovieReviewComponentProps {
-  movie: MovieDataItem
-}
-
-export type MovieDataState = MovieDataItem[] | null
-
-export interface ReviewState {
-  id: number
-  show: boolean
-}
-
-export interface MovieDataItem {
-  backdrop_path: string
-  genre_ids: number[]
-  id: number
-  original_title: string
-  overview: string
-  poster_path: string
-  release_date: string
-  title: string
-  vote_average: number
-  vote_count: number
-}
-
-export interface FormDataState {
-  movieId: number
-  movieReview: string
-  movieRating: number
-}
-
-export interface ReviewDataState extends FormDataState {
-  reviewId: number
-}
-
-export type MovieReviewModalContentType = Omit<
-  MovieReviewModalProps,
-  'isModalOpen' | 'handleCloseModal'
->
-
-export interface MovieReviewModalProps {
-  isModalOpen: boolean
-  handleCloseModal: () => void
-  modalData: MovieDataItem
-  formData: FormDataState
-  submitReview: (e: React.FormEvent) => void
-  handleForm: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => void
-}
-
-export interface MovieReviewMainProps {
-  movieData: MovieDataState
-  reviewData: ReviewDataState[]
-  setReviewData: React.Dispatch<React.SetStateAction<ReviewDataState[]>>
-}
-
-export interface SearchTypeMapProps {
-  search: string
-  popular: string
-  'top rated': string
-  upcoming: string
-}
-
-export interface QueryMovieProps {
-  searchTerm?: string
-  searchType: keyof SearchTypeMapProps
-}
+import type {
+  QueryMovieProps,
+  ReviewDataState,
+  SearchTypeMapProps,
+} from '../types/movieReview'
 
 const searchTypeMap: SearchTypeMapProps = {
   search: '/search/movie?query=',

@@ -1,15 +1,5 @@
-import {
-  getReviewCount,
-  type MovieDataItem,
-  type MovieReviewComponentProps,
-  type ReviewDataState,
-} from '../util/movieReview'
-
-interface MovieReviewButtonsProps extends MovieReviewComponentProps {
-  reviewData: ReviewDataState[]
-  handleOpenModal: (data: MovieDataItem) => void
-  handleReview: (movie: MovieDataItem) => void
-}
+import type { MovieReviewButtonsProps } from '../types/movieReview'
+import { getReviewCount } from '../util/movieReview'
 
 export default function MovieReviewButtons({
   movie,

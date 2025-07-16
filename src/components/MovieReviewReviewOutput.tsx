@@ -1,13 +1,4 @@
-import type {
-  MovieReviewComponentProps,
-  ReviewDataState,
-  ReviewState,
-} from '../util/movieReview'
-
-interface MovieReviewReviewOutputProps extends MovieReviewComponentProps {
-  showReview: ReviewState
-  reviewData: ReviewDataState[]
-}
+import type { MovieReviewReviewOutputProps } from '../types/movieReview'
 
 export default function MovieReviewReviewOutput({
   showReview,

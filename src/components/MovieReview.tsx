@@ -4,12 +4,12 @@ import MovieReviewHeader from './MovieReviewHeader'
 import MovieReviewInput from './MovieReviewInput'
 import WideContainer from './WideContainer'
 import MovieReviewMain from './MovieReviewMain'
-import {
-  queryMovies,
-  type MovieDataState,
-  type ReviewDataState,
-  type SearchTypeMapProps,
-} from '../util/movieReview'
+import type {
+  MovieDataState,
+  ReviewDataState,
+  SearchTypeMapProps,
+} from '../types/movieReview'
+import { queryMovies } from '../util/movieReview'
 
 const STORAGE_KEY = 'movieReviews'
 
