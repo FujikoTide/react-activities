@@ -1,11 +1,12 @@
 import type { MovieReviewButtonsProps } from '../types/movieReview'
-import { getReviewCount } from '../util/movieReview'
+import { reviewButton } from '../util/movieReview'
 
 export default function MovieReviewButtons({
   movie,
   reviewData,
   handleOpenModal,
   handleReview,
+  showReview,
 }: MovieReviewButtonsProps) {
   return (
     <div className="flex flex-row gap-2">
@@ -21,7 +22,7 @@ export default function MovieReviewButtons({
         className="flex h-10 w-full cursor-pointer items-center justify-center border-2 border-black bg-white p-2 hover:bg-green-700 hover:text-white"
         onClick={() => handleReview(movie)}
       >
-        {`${getReviewCount(reviewData, movie.id)}`}
+        {`${reviewButton(reviewData, movie.id, showReview)}`}
       </button>
     </div>
   )

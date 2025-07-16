@@ -2,6 +2,7 @@ import axios from 'axios'
 import type {
   QueryMovieProps,
   ReviewDataState,
+  ReviewState,
   SearchTypeMapProps,
 } from '../types/movieReview'
 
@@ -54,5 +55,18 @@ export const getReviewCount = (
   const reviewCount = reviewData.filter(
     (review) => review.movieId === movieId,
   ).length
-  return reviewCount > 0 ? `Reviews (${reviewCount})` : 'No Reviews'
+  return reviewCount
+}
+
+export const reviewButton = (
+  reviewData: ReviewDataState[],
+  movieId: number,
+  showReview: ReviewState,
+) => {
+  const reviewCount = getReviewCount(reviewData, movieId)
+  if (showReview.id === movieId && showReview.show) {
+    return 'Hide Reviews'
+  } else {
+    return reviewCount > 0 ? `Reviews (${reviewCount})` : 'No Reviews'
+  }
 }

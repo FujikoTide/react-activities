@@ -31,6 +31,7 @@ export default function MovieReviewCard({
                   reviewData={reviewData}
                   handleOpenModal={handleOpenModal}
                   handleReview={handleReview}
+                  showReview={showReview}
                 />
                 <div className="flex flex-row justify-between">
                   <MovieReviewRating movie={movie} />

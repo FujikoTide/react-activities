@@ -12,6 +12,7 @@ export interface MovieReviewButtonsProps extends MovieReviewComponentProps {
   reviewData: ReviewDataState[]
   handleOpenModal: (data: MovieDataItem) => void
   handleReview: (movie: MovieDataItem) => void
+  showReview: ReviewState
 }
 
 export interface MovieReviewCardProps
