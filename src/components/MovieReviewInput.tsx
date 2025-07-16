@@ -18,24 +18,27 @@ export default function MovieReviewInput({
   return (
     <div className="bg-neutral-300 p-10 text-2xl font-bold">
       <div className="mb-2 flex flex-row justify-evenly text-lg">
-        <div
+        <button
+          type="button"
           className="cursor-pointer hover:text-orange-500"
           onClick={() => getMovieDataByList('popular')}
         >
           Popular
-        </div>
-        <div
+        </button>
+        <button
+          type="button"
           className="cursor-pointer hover:text-orange-500"
           onClick={() => getMovieDataByList('upcoming')}
         >
           Upcoming
-        </div>
-        <div
+        </button>
+        <button
+          type="button"
           className="cursor-pointer hover:text-orange-500"
           onClick={() => getMovieDataByList('top rated')}
         >
           Top Rated
-        </div>
+        </button>
       </div>
       <form onSubmit={getMovieData}>
         <div className="flex flex-row justify-center">

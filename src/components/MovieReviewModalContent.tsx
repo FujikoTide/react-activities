@@ -1,11 +1,6 @@
-import type { MovieReviewModalProps } from './MovieReviewModal'
+import type { MovieReviewModalContentType } from '../util/movieReview'
 import MovieReviewModalForm from './MovieReviewModalForm'
 import MovieReviewPoster from './MovieReviewPoster'
-
-type MovieReviewModalContentType = Omit<
-  MovieReviewModalProps,
-  'isModalOpen' | 'handleCloseModal'
->
 
 export default function MovieReviewModalContent({
   modalData,

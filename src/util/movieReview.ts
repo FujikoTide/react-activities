@@ -26,15 +26,34 @@ export interface MovieDataItem {
 
 export interface FormDataState {
   movieId: number
-  review: string
-  rating: number
-}
-
-export interface ReviewDataState {
-  reviewId: number
-  movieId: number
   movieReview: string
   movieRating: number
+}
+
+export interface ReviewDataState extends FormDataState {
+  reviewId: number
+}
+
+export type MovieReviewModalContentType = Omit<
+  MovieReviewModalProps,
+  'isModalOpen' | 'handleCloseModal'
+>
+
+export interface MovieReviewModalProps {
+  isModalOpen: boolean
+  handleCloseModal: () => void
+  modalData: MovieDataItem
+  formData: FormDataState
+  submitReview: (e: React.FormEvent) => void
+  handleForm: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => void
+}
+
+export interface MovieReviewMainProps {
+  movieData: MovieDataState
+  reviewData: ReviewDataState[]
+  setReviewData: React.Dispatch<React.SetStateAction<ReviewDataState[]>>
 }
 
 export interface SearchTypeMapProps {

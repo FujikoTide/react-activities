@@ -2,19 +2,12 @@ import { useEffect, useState } from 'react'
 import {
   type FormDataState,
   type MovieDataItem,
-  type MovieDataState,
-  type ReviewDataState,
+  type MovieReviewMainProps,
   type ReviewState,
 } from '../util/movieReview'
 import useId from '../hooks/useId'
 import MovieReviewModal from './MovieReviewModal'
 import MovieReviewCard from './MovieReviewCard'
-
-interface MovieReviewMainProps {
-  movieData: MovieDataState
-  reviewData: ReviewDataState[]
-  setReviewData: React.Dispatch<React.SetStateAction<ReviewDataState[]>>
-}
 
 export default function MovieReviewMain({
   movieData,
@@ -41,8 +34,8 @@ export default function MovieReviewMain({
   const { id, setId, incrementID } = useId(0)
   const [formData, setFormData] = useState<FormDataState>({
     movieId: 0,
-    review: '',
-    rating: 0,
+    movieReview: '',
+    movieRating: 0,
   })
 
   useEffect(() => {
@@ -105,14 +98,14 @@ export default function MovieReviewMain({
       {
         reviewId: id,
         movieId: formData.movieId,
-        movieReview: formData.review,
-        movieRating: formData.rating,
+        movieReview: formData.movieReview,
+        movieRating: formData.movieRating,
       },
     ])
     setFormData({
       movieId: 0,
-      review: '',
-      rating: 0,
+      movieReview: '',
+      movieRating: 0,
     })
     incrementID()
     handleCloseModal()

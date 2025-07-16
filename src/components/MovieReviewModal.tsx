@@ -1,17 +1,6 @@
-import type { FormDataState, MovieDataItem } from '../util/movieReview'
+import type { MovieReviewModalProps } from '../util/movieReview'
 import Modal from './Modal'
 import MovieReviewModalContent from './MovieReviewModalContent'
-
-export interface MovieReviewModalProps {
-  isModalOpen: boolean
-  handleCloseModal: () => void
-  modalData: MovieDataItem
-  formData: FormDataState
-  submitReview: (e: React.FormEvent) => void
-  handleForm: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => void
-}
 
 export default function MovieReviewModal({
   isModalOpen,

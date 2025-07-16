@@ -1,16 +1,11 @@
-import type { MovieReviewModalProps } from './MovieReviewModal'
-
-type MovieReviewModalFormType = Omit<
-  MovieReviewModalProps,
-  'isModalOpen' | 'handleCloseModal'
->
+import type { MovieReviewModalContentType } from '../util/movieReview'
 
 export default function MovieReviewModalForm({
   modalData,
   formData,
   submitReview,
   handleForm,
-}: MovieReviewModalFormType) {
+}: MovieReviewModalContentType) {
   return (
     <div className="flex w-[60%] flex-col justify-between bg-neutral-300 p-5">
       <div className="flex flex-col">
@@ -32,7 +27,7 @@ export default function MovieReviewModalForm({
               <textarea
                 className="flex border-2 border-black bg-white p-2 outline-0"
                 rows={4}
-                value={formData.review}
+                value={formData.movieReview}
                 name="review"
                 id="review"
                 onChange={handleForm}
@@ -47,7 +42,7 @@ export default function MovieReviewModalForm({
                 className="flex border-2 border-black bg-white p-2 outline-0"
                 min={0}
                 max={10}
-                value={formData.rating}
+                value={formData.movieRating}
                 name="rating"
                 id="rating"
                 onChange={handleForm}
