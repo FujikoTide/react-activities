@@ -10,18 +10,17 @@ export default function MovieReviewModal({
   submitReview,
   handleForm,
 }: MovieReviewModalProps) {
+  if (!isModalOpen) {
+    return null
+  }
   return (
-    <>
-      {isModalOpen && (
-        <Modal onClose={handleCloseModal}>
-          <MovieReviewModalContent
-            modalData={modalData}
-            formData={formData}
-            submitReview={submitReview}
-            handleForm={handleForm}
-          />
-        </Modal>
-      )}
-    </>
+    <Modal onClose={handleCloseModal}>
+      <MovieReviewModalContent
+        modalData={modalData}
+        formData={formData}
+        submitReview={submitReview}
+        handleForm={handleForm}
+      />
+    </Modal>
   )
 }
