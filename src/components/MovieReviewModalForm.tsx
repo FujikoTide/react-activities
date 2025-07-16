@@ -6,7 +6,6 @@ export default function MovieReviewModalForm({
   submitReview,
   handleForm,
 }: MovieReviewModalContentType) {
-  // console.log(modalData)
   return (
     <div className="flex w-[60%] flex-col justify-between bg-neutral-300 p-5">
       <div className="flex flex-col">

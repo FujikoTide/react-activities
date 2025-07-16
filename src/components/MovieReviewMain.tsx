@@ -93,7 +93,6 @@ export default function MovieReviewMain({
 
   const submitReview = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log(formData)
     setReviewData((prevReviewData) => [
       ...prevReviewData,
       {
