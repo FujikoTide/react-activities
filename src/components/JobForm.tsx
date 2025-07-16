@@ -6,9 +6,9 @@ import {
   ALL_JOB_CATEGORIES,
 } from '../types/jobForm'
 import WideContainer from './WideContainer'
-import JobColumn2 from './JobColumn2'
+
 import useMultiSelect from '../hooks/useMultiSelect'
-// import JobColumn from './JobColumn'
+import JobColumn from './JobColumn'
 
 const JOB_STATUS_MAP: Record<JobStatus, string> = {
   start: 'Start Process',
@@ -253,7 +253,7 @@ export default function JobForm() {
             //   return null
             // }
             return (
-              <JobColumn2
+              <JobColumn
                 key={status}
                 statusType={status}
                 jobs={jobsForStatus}

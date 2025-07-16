@@ -1,69 +1,124 @@
-# React + TypeScript + Vite
+# Components
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Activities
 
-Currently, two official plugins are available:
+### Module 2
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+#### ProfileCard
 
-## Expanding the ESLint configuration
+[./src/components/ProfileCard.tsx](./src/components/ProfileCard.tsx)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+#### VariableDisplay
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+[./src/components/VariableDisplay.tsx](./src/components/VariableDisplay.tsx)
+[./src/components/List.tsx](./src/components/List.tsx)
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+#### JobBoard
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+[./src/components/JobBoard.tsx](./src/components/JobBoard.tsx)
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Module 3
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+#### Button
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+[./src/components/Button.tsx](./src/components/Button.tsx)
+
+#### JobCounter
+
+[./src/components/JobCounter.tsx](./src/components/JobCounter.tsx)
+
+#### AdvancedJobCounter
+
+[./src/components/AdvancedJobCounter.tsx](./src/components/AdvancedJobCounter.tsx)
+
+#### DynamicForm
+
+[./src/components/DynamicForm.tsx](./src/components/DynamicForm.tsx)
+
+#### BotListManager
+
+See Module 4
+
+### Module 4
+
+#### Dynamic BotListManager
+
+[./src/components/BotListManager.tsx](./src/components/BotListManager.tsx)
+[./src/components/DeleteButton.tsx](./src/components/DeleteButton.tsx)
+
+#### ModularJobBoard
+
+[./src/components/ModularJobBoard.tsx](./src/components/ModularJobBoard.tsx)
+[./src/components/Footer.tsx](./src/components/Footer.tsx)
+[./src/components/Header.tsx](./src/components/Header.tsx)
+[./src/components/JobList.tsx](./src/components/JobList.tsx)
+[./src/components/JobItem.tsx](./src/components/JobItem.tsx)
+
+#### StatusBoard
+
+[./src/components/StatusBoard.tsx](./src/components/StatusBoard.tsx)
+[./src/components/TicketInfo.tsx](./src/components/TicketInfo.tsx)
+[./src/components/ShowTicket.tsx](./src/components/ShowTicket.tsx)
+[./src/components/AddTicketForm.tsx](./src/components/AddTicketForm.tsx)
+
+### Module 5
+
+#### JobForm
+
+See Module 6
+
+### Module 6
+
+[./src/components/JobForm.tsx](./src/components/JobForm.tsx)
+[./src/components/JobColumn.tsx](./src/components/JobColumn.tsx)
+
+### Module 7
+
+#### InvestMentCalculator
+
+[./src/components/InvestMentCalculator.tsx](./src/components/InvestMentCalculator.tsx)
+[./src/components/InvestmentCalculatorHeader.tsx](./src/components/InvestmentCalculatorHeader.tsx)
+[./src/components/InvestmentCalculatorInput.tsx](./src/components/InvestmentCalculatorInput.tsx)
+[./src/components/InvestmentCalculatorOutputData.tsx](./src/components/InvestmentCalculatorOutputData.tsx)
+[./src/components/InvestmentCalculatorGraph.tsx](./src/components/InvestmentCalculatorGraph.tsx)
+
+### Module 8
+
+#### PasswordGenerator
+
+[./src/components/PasswordGenerator.tsx](./src/components/PasswordGenerator.tsx)
+
+### Module 9 & 10
+
+#### MovieReview
+
+[./src/components/MovieReview.tsx](./src/components/MovieReview.tsx)
+[./src/components/MovieReviewMain.tsx](./src/components/MovieReviewMain.tsx)
+[./src/components/MovieReviewHeader.tsx](./src/components/MovieReviewHeader.tsx)
+[./src/components/MovieReviewCard.tsx](./src/components/MovieReviewCard.tsx)
+[./src/components/MovieReviewPoster.tsx](./src/components/MovieReviewPoster.tsx)
+[./src/components/MovieReviewInfo.tsx](./src/components/MovieReviewInfo.tsx)
+[./src/components/MovieReviewButtons.tsx](./src/components/MovieReviewButtons.tsx)
+[./src/components/MovieReviewRating.tsx](./src/components/MovieReviewRating.tsx)
+[./src/components/MovieReviewReleaseDate.tsx](./src/components/MovieReviewReleaseDate.tsx)
+[./src/components/MovieReviewReviewOutput.tsx](./src/components/MovieReviewReviewOutput.tsx)
+[./src/components/MovieReviewModal.tsx](./src/components/MovieReviewModal.tsx)
+[./src/components/MovieReviewModalContent.tsx](./src/components/MovieReviewModalContent.tsx)
+[./src/components/MovieReviewModalForm.tsx](./src/components/MovieReviewModalForm.tsx)
+[./src/components/MovieReviewInput.tsx](./src/components/MovieReviewInput.tsx)
+
+## Utility Components
+
+#### Container
+
+[./src/components/Container.tsx](./src/components/Container.tsx)
+[./src/components/WideContainer.tsx](./src/components/WideContainer.tsx)
+[./src/components/SuperWideContainer.tsx](./src/components/SuperWideContainer.tsx)
+
+#### Modal
+
+[./src/components/Modal.tsx](./src/components/Modal.tsx)
+
+#### Popover
+
+[./src/components/Popover.tsx](./src/components/Popover.tsx)
