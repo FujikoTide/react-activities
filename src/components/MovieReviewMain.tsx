@@ -93,6 +93,7 @@ export default function MovieReviewMain({
 
   const submitReview = (e: React.FormEvent) => {
     e.preventDefault()
+    console.log(formData)
     setReviewData((prevReviewData) => [
       ...prevReviewData,
       {
@@ -102,11 +103,11 @@ export default function MovieReviewMain({
         movieRating: formData.movieRating,
       },
     ])
-    setFormData({
-      movieId: 0,
+    setFormData((prevFormData) => ({
+      ...prevFormData,
       movieReview: '',
       movieRating: 0,
-    })
+    }))
     incrementID()
     handleCloseModal()
   }

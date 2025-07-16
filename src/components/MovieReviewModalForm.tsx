@@ -6,6 +6,7 @@ export default function MovieReviewModalForm({
   submitReview,
   handleForm,
 }: MovieReviewModalContentType) {
+  // console.log(modalData)
   return (
     <div className="flex w-[60%] flex-col justify-between bg-neutral-300 p-5">
       <div className="flex flex-col">
@@ -17,7 +18,7 @@ export default function MovieReviewModalForm({
             type="hidden"
             name="movieId"
             id="movieId"
-            value={formData.movieId}
+            value={modalData.id}
           />
           <div className="justify-between">
             <div className="flex flex-col">
@@ -28,8 +29,8 @@ export default function MovieReviewModalForm({
                 className="flex border-2 border-black bg-white p-2 outline-0"
                 rows={4}
                 value={formData.movieReview}
-                name="review"
-                id="review"
+                name="movieReview"
+                id="movieReview"
                 onChange={handleForm}
               />
             </div>
@@ -43,8 +44,8 @@ export default function MovieReviewModalForm({
                 min={0}
                 max={10}
                 value={formData.movieRating}
-                name="rating"
-                id="rating"
+                name="movieRating"
+                id="movieRating"
                 onChange={handleForm}
               />
             </div>
